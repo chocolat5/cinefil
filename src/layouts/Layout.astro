@@ -1,0 +1,115 @@
+---
+import "@/styles/fonts.css";
+import "@/styles/globals.css";
+
+import type { SiteMeta } from "@/types/types";
+import config from "@/config/site.config";
+
+import Footer from "@/components/layout/Footer.astro";
+import Toast from "@/components/ui/Toast";
+import { checkAuth, parseToken } from "@/utils/auth";
+import Header from "@/components/layout/Header";
+import MainContainer from "@/components/ui/MainContainer";
+
+interface Props {
+  meta: SiteMeta;
+  frontmatter?: SiteMeta;
+  userId?: string;
+}
+
+// check auth
+const sessionToken = Astro.cookies.get("session_token")?.value;
+const tokenData = sessionToken ? parseToken(sessionToken) : null;
+
+const isAuthenticated = sessionToken ? checkAuth(sessionToken) : false;
+
+const currentPath = Astro.url.pathname;
+const canonicalURL = new URL(currentPath, Astro.site);
+const { title, noindex, description, ogImage, className } =
+  Astro.props.frontmatter || Astro.props.meta;
+const userId = tokenData?.userId || Astro.props;
+
+const siteTitleName = title ? title : config.sitename;
+const siteTitle = `${siteTitleName}${currentPath !== "/" && ` | ${config.sitename}`}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{siteTitle}</title>
+    <meta name="description" content={description ?? config.discription} />
+
+    {/* Favicon */}
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/favicon.png" />
+    <meta name="theme-color" content={config.themeColor} />
+
+    {/* Preload fonts */}
+    <link
+      rel="preload"
+      href="/fonts/RobotoMono-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/RobotoMono-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    {/* OGP */}
+    <meta name="title" content={siteTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={siteTitle} />
+    <meta
+      property="og:description"
+      content={description ?? config.discription}
+    />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={config.sitename} />
+    <meta
+      property="og:image"
+      content={ogImage || `${config.url}images/og-image.png`}
+    />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="cinefil.me" />
+    <meta property="twitter:creator" content="@fyurie_" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={siteTitle} />
+    <meta
+      property="twitter:description"
+      content={description ?? config.discription}
+    />
+    <meta
+      name="twitter:image"
+      content={ogImage || `${config.url}images/og-image.png`}
+    />
+
+    {/* noIndex */}
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <div class="wrapper">
+      <Header
+        client:idle
+        isAuthenticated={isAuthenticated}
+        userId={userId as string}
+        currentPath={currentPath}
+      />
+      <MainContainer id="main-content" className={className}>
+        <slot />
+      </MainContainer>
+      <Footer />
+    </div>
+    <Toast client:idle />
+  </body>
+</html>

@@ -1,0 +1,135 @@
+---
+import type { SiteMeta } from "@/types/types";
+
+import Layout from "@/layouts/Layout.astro";
+import { checkCurrentUser } from "@/utils/auth";
+import {
+  getProfileApiSSR,
+  getFavoriteMoviesApiSSR,
+  getFavoriteDirectorsApiSSR,
+  getFavoriteActorsApiSSR,
+  getFavoriteGenresApiSSR,
+  getFavoriteTheatersApiSSR,
+  getFavoriteQuoteApiSSR,
+} from "@/utils/api";
+import { PUBLIC_API_BASE_URL, FAVORITES_MAP } from "@/config/constants";
+import { FavoriteMoviesView, FavoriteMoviesEdit, FavoritePersonsView, FavoritePersonsEdit, FavoriteGenresEdit, FavoriteGenresView, FavoriteTheatersView, FavoriteTheatersEdit } from "@/components/favorites";
+import { ProfileView, ProfileEdit } from "@/components/profile";
+import SectionContainerView from "@/components/layout/SectionContainerView";
+import FavoriteQuoteView from "@/components/favorites/FavoriteQuoteView";
+import FavoriteQuoteEdit from "@/components/favorites/FavoriteQuoteEdit";
+
+/**
+ * no redirect: it's public page
+ */
+
+// get the slug from the server request
+const { userId } = Astro.params;
+if (!userId) {
+  return Astro.redirect(`/404`);
+}
+
+// fetch user profile data
+let resProfile;
+let resMovies;
+let resDirectors;
+let resActors;
+let resGenres;
+let resTheaters;
+let resQuote;
+
+try {
+  [resProfile, resMovies, resDirectors, resActors, resGenres, resTheaters, resQuote] =
+    await Promise.all([
+      await getProfileApiSSR(userId as string),
+      await getFavoriteMoviesApiSSR(userId as string),
+      await getFavoriteDirectorsApiSSR(userId as string),
+      await getFavoriteActorsApiSSR(userId as string),
+      await getFavoriteGenresApiSSR(userId as string),
+      await getFavoriteTheatersApiSSR(userId as string),
+      await getFavoriteQuoteApiSSR(userId as string),
+    ]);
+  // userProfile = await getProfileApiSSR(userId as string);
+  if (
+    !resProfile ||
+    !resMovies ||
+    !resDirectors ||
+    !resActors ||
+    !resGenres ||
+    !resTheaters ||
+    !resQuote
+  ) {
+    return Astro.redirect(`/404`);
+  }
+} catch (error) {
+  return Astro.redirect(`/404`);
+}
+
+// chech auth
+const sessionToken = Astro.cookies.get("session_token")?.value;
+const isCurrentUser = checkCurrentUser(sessionToken as string, userId);
+
+// for meta
+const ogImageUrl = `${PUBLIC_API_BASE_URL}/api/og-image?userId=${userId}`;
+const description =
+  resProfile?.bio ??
+  `Check out ${resProfile?.displayName}'s favorite films, directors, actors, and more!`;
+
+const meta: SiteMeta = {
+  title: `${resProfile?.displayName}'s profile`,
+  description,
+  ogImage: ogImageUrl,
+};
+
+// const viewSections = [
+//   { key: "movies", data: resMovies.movies, Component: FavoriteMoviesView },
+//   { key: "directors", data: resDirectors.directors, Component: FavoritePersonsView },
+//   { key: "actors", data: resActors.actors, Component: FavoritePersonsView },
+//   { key: "genres", data: resGenres.genres, Component: FavoriteGenresView },
+//   { key: "theaters", data: resTheaters.theaters, Component: FavoriteTheatersView },
+// ]
+---
+
+<Layout meta={meta} userId={userId}>
+  {
+    isCurrentUser ? (
+      // login
+      <ProfileEdit
+        client:idle
+        userId={userId as string}
+        userProfile={resProfile}
+      />
+      <FavoriteMoviesEdit client:idle userId={userId} userFavMovies={resMovies.movies} />
+      <FavoritePersonsEdit client:idle userId={userId} userFavPersons={resDirectors.directors} type="directors" />
+      <FavoritePersonsEdit client:idle userId={userId} userFavPersons={resActors.actors} type="actors" />
+      <FavoriteGenresEdit client:idle userId={userId} userFavGenres={resGenres.genres} />
+      <FavoriteQuoteEdit client:idle userId={userId} userFavQuote={resQuote.quote} />
+      <FavoriteTheatersEdit client:idle userId={userId} userFavTheaters={resTheaters.theaters} />
+    ) : (
+      // not login
+      <>
+        <SectionContainerView client:visible>
+          <ProfileView userProfile={resProfile} />
+        </SectionContainerView>
+        <SectionContainerView client:visible title={FAVORITES_MAP["movies"].title}>
+          <FavoriteMoviesView items={resMovies.movies} />
+        </SectionContainerView>
+        <SectionContainerView client:visible title={FAVORITES_MAP["directors"].title}>
+          <FavoritePersonsView items={resDirectors.directors} itemsKey={FAVORITES_MAP["directors"].itemsKey} />
+        </SectionContainerView>
+        <SectionContainerView client:visible title={FAVORITES_MAP["actors"].title}>
+          <FavoritePersonsView items={resActors.actors} itemsKey={FAVORITES_MAP["actors"].itemsKey} />
+        </SectionContainerView>
+        <SectionContainerView client:visible title={FAVORITES_MAP["genres"].title}>
+          <FavoriteGenresView items={resGenres.genres} />
+        </SectionContainerView>
+        <SectionContainerView client:visible title={FAVORITES_MAP["quote"].title}>
+          <FavoriteQuoteView item={resQuote.quote} />
+        </SectionContainerView>
+        <SectionContainerView client:visible title={FAVORITES_MAP["theaters"].title}>
+          <FavoriteTheatersView items={resTheaters.theaters} />
+        </SectionContainerView>
+      </>
+    )
+  }
+</Layout>

@@ -1,0 +1,52 @@
+.modal {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--base);
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--main);
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin: 0 0 20px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.button {
+  display: block;
+  background: none;
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: 0.25s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  svg {
+    color: var(--ui);
+    width: 20px;
+    height: 20px;
+  }
+}

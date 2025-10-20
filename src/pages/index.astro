@@ -1,0 +1,15 @@
+---
+import type { SiteMeta } from "@/types/types";
+
+import Layout from "@/layouts/Layout.astro";
+import config from "@/config/site.config";
+import About from "@/components/pages/About";
+
+const meta: SiteMeta = {
+  title: `${config.sitename} | ${config.discription}`,
+};
+---
+
+<Layout meta={meta}>
+  <About imgUrl="/images/index.png" />
+</Layout>

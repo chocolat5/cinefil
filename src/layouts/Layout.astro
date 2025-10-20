@@ -36,6 +36,22 @@ const siteTitle = `${siteTitleName}${currentPath !== "/" && ` | ${config.sitenam
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google Analytics -->
+    <script
+      is:inline
+      type="text/partytown"
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TQHK5CK1Y6"></script>
+    <script is:inline type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-TQHK5CK1Y6");
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{siteTitle}</title>

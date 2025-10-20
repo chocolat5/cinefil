@@ -9,7 +9,14 @@ export default defineConfig({
   baseUrl: "./",
   output: "server",
   adapter: cloudflare(),
-  integrations: [react(), partytown()],
+  integrations: [
+    react(),
+    partytown({
+      config: {
+        forward: ["dataLayer.push"],
+      },
+    }),
+  ],
   vite: {
     resolve: {
       alias: {

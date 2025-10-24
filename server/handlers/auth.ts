@@ -76,8 +76,10 @@ export const loginHandler = async (c: Context<{ Bindings: Bindings }>) => {
     const resend = new Resend(c.env.RESEND_API_KEY);
 
     await resend.emails.send({
-      // from: "Cinefil <hello@cinefil.me>",
-      from: "onboarding@resend.dev",
+      from:
+        c.env.NODE_ENV === "development"
+          ? "onboarding@resend.dev"
+          : "Cinefil <hello@cinefil.me>",
       to: email,
       subject: "Code to log in to cinefil.me",
       html: emailHtml,

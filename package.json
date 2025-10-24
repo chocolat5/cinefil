@@ -26,7 +26,7 @@
     "qrcode-generator": "^2.0.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "resend": "^6.0.2",
+    "resend": "^6.2.2",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

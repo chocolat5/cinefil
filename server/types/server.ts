@@ -1,7 +1,6 @@
 import { D1Database } from "@cloudflare/workers-types";
 
 export type Bindings = {
-  RESEND_API_KEY: string;
   JWT_SECRET: string;
   cinefil_db: D1Database;
   SITE_URL: string;

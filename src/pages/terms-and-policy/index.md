@@ -45,14 +45,12 @@ We collect only essential information to provide our service:
 
 We use the following services to operate [cinefil.me](https://cinefil.me/):
 
-- **Cloudflare**: Hosting and database storage
-- **Resend**: Transactional email delivery
+- **Cloudflare**: Hosting and database storage, and email delivery
 - **TMDB (The Movie Database)**: Movie data and images
 
 Each service has its own privacy policy. We recommend reviewing them:
 
 - [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/)
-- [Resend Privacy Policy](https://resend.com/legal/privacy-policy)
 - [TMDB Privacy Policy](https://www.themoviedb.org/privacy-policy)
 
 ---

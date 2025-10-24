@@ -1,6 +1,5 @@
 import type { Context } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { Resend } from "resend";
 
 import { AUTH, getCookieOptions } from "../config/constants";
 import { loginEmail } from "../templates/loginEmail";
@@ -16,7 +15,7 @@ import { validateEmail } from "../utils/validate";
 export const loginHandler = async (c: Context<{ Bindings: Bindings }>) => {
   try {
     // check env
-    if (!c.env.JWT_SECRET || !c.env.RESEND_API_KEY || !c.env.SITE_URL) {
+    if (!c.env.JWT_SECRET || !c.env.SITE_URL) {
       return c.json({ error: "Server configuration error" }, 500);
     }
 
@@ -73,15 +72,20 @@ export const loginHandler = async (c: Context<{ Bindings: Bindings }>) => {
       "{{LOGIN_CODE}}",
       loginCode.toString()
     );
-    const resend = new Resend(c.env.RESEND_API_KEY);
 
-    await resend.emails.send({
-      // from: "Cinefil <hello@cinefil.me>",
-      from: "onboarding@resend.dev",
-      to: email,
-      subject: "Code to log in to cinefil.me",
-      html: emailHtml,
+    const res = await fetch("https://api.mailchannels.net/tx/v1/send", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email }] }],
+        from: { email: "hello@cinefil.me", name: "Cinefil" },
+        subject: "Code to log in to cinefil.me",
+        content: [{ type: "text/html", value: emailHtml }],
+      }),
     });
+    if (!res.ok) {
+      return c.json({ error: "Internal server error" }, 500);
+    }
 
     return c.json(
       { success: true, message: "Login code sent to your email" },

@@ -1,0 +1,27 @@
+/* ========================
+   Fonts
+   ======================== */
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("/fonts/RobotoMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: fallback;
+}
+
+:root {
+  --font:
+    "Roboto Mono", system-ui, -apple-system, "Segoe UI", Roboto, monospace;
+}
+
+body {
+  font-family: var(--font);
+}

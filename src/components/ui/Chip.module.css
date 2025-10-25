@@ -1,0 +1,25 @@
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1;
+
+  &.-clickable {
+    cursor: pointer;
+  }
+
+  &.-solid {
+    color: var(--primary);
+    background-color: var(--primary200);
+  }
+
+  &.-contained {
+    color: var(--base);
+    background-color: var(--primary);
+  }
+}

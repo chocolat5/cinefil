@@ -1,0 +1,40 @@
+.about {
+  h2 {
+    margin: 32px 0 12px;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+
+  p {
+    color: var(--black);
+    margin: 20px 0;
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+
+  a:not([class*="-contained"]) {
+    text-decoration: underline;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 32px 0;
+    border: 1px solid var(--gray);
+    border-radius: 12px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .primary {
+    color: var(--primary);
+  }
+}
+
+.buttonWrap {
+  max-width: 320px;
+  margin: 0 auto;
+}

@@ -1,0 +1,61 @@
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a class="footer-link" href="/">About</a>
+      <a class="footer-link" href="/terms-and-policy">Terms & Privacy</a>
+    </div>
+    <p class="owner">
+      β version ・ View on <a
+        href="https://github.com/chocolat5/cinefil"
+        target="_blank">GitHub</a
+      > ・ Made by <a
+        href="https://github.com/chocolat5"
+        target="_blank"
+        rel="noopener noreferrer">chocolat</a
+      >
+    </p>
+    <address class="copyright">
+      &copy; {new Date().getFullYear()}, cinefil
+    </address>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--footer);
+    padding: 32px 0;
+  }
+  .footer-inner {
+    max-width: var(--main);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .footer-link {
+    color: var(--black);
+    font-size: 1.4rem;
+  }
+
+  .owner {
+    margin: 16px 0 0;
+    color: var(--black);
+    font-size: 1.4rem;
+    line-height: 1.4;
+    text-align: center;
+    a {
+      border-bottom: 1px dashed var(--gray);
+    }
+  }
+  .copyright {
+    margin: 8px 0 0;
+    color: var(--black);
+    font-size: 1.3rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+</style>

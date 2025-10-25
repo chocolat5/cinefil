@@ -1,0 +1,35 @@
+---
+import type { SiteMeta } from "@/types/types";
+
+import Layout from "@/layouts/Layout.astro";
+import Login from "@/components/pages/Login";
+import config from "@/config/site.config";
+import { parseToken } from "@/utils/auth";
+
+/**
+ * redirect
+ */
+const sessionToken = Astro.cookies.get("session_token")?.value;
+if (sessionToken) {
+  const tokenData = parseToken(sessionToken);
+
+  try {
+    if (tokenData) {
+      const { tokenType } = tokenData;
+      if (tokenType === "session") {
+        return Astro.redirect(`/${tokenData.userId}`);
+      }
+    }
+  } catch (error) {
+    console.error("Invalid token", error);
+  }
+}
+
+const meta: SiteMeta = {
+  title: `${config.sitename} | ${config.discription}`,
+};
+---
+
+<Layout meta={meta}>
+  <Login client:load />
+</Layout>

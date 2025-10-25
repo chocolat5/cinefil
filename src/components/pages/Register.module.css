@@ -1,0 +1,51 @@
+.title {
+  margin: 16px 0 20px;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.bodyText {
+  color: var(--black);
+  margin: 20px 0;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.label {
+  display: inline-block;
+  margin: 20px 0 4px;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.textInput {
+  padding-right: 40px;
+}
+
+.helperText {
+  margin: 8px;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.checkIcon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  line-height: 1;
+
+  svg {
+    color: var(--success);
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.button {
+  margin: 20px 0 0;
+}

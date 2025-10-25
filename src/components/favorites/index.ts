@@ -1,0 +1,12 @@
+export { default as FavoriteMoviesEdit } from "./FavoriteMoviesEdit";
+export { default as FavoriteMoviesView } from "./FavoriteMoviesView";
+export { default as FavoritePersonsEdit } from "./FavoritePersonsEdit";
+export { default as FavoritePersonsView } from "./FavoritePersonsView";
+export { default as FavoriteGenresEdit } from "./FavoriteGenresEdit";
+export { default as FavoriteGenresView } from "./FavoriteGenresView";
+export { default as FavoriteTheatersEdit } from "./FavoriteTheatersEdit";
+export { default as FavoriteTheatersView } from "./FavoriteTheatersView";
+export { default as SearchMovie } from "./SearchMovie";
+export { default as SearchPerson } from "./SearchPerson";
+export { default as Poster } from "./Poster";
+export { default as Person } from "./Person";

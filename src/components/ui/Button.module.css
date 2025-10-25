@@ -1,0 +1,61 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: 0.25s;
+
+  &:disabled {
+    opacity: var(--disabled);
+    cursor: default;
+  }
+
+  &.-outlined {
+    color: var(--primary);
+    background-color: var(--base);
+    border: 1px solid var(--primary);
+    &:hover:not(:disabled) {
+      background-color: var(--primary100);
+    }
+  }
+
+  &.-contained {
+    color: var(--base);
+    background-color: var(--primary);
+    &:hover:not(:disabled) {
+      background-color: var(--primaryHover);
+    }
+  }
+
+  &.-solid {
+    color: var(--black);
+    background-color: var(--gray);
+    &:hover:not(:disabled) {
+      background-color: var(--grayHover);
+    }
+  }
+}
+
+.buttonDelete {
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: var(--error);
+  cursor: pointer;
+
+  svg {
+    color: var(--base);
+  }
+}

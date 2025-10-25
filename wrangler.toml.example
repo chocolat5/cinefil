@@ -1,0 +1,20 @@
+# Cloudflare Workers Configuration Template
+# Copy this file to wrangler.toml and replace placeholder values
+# 
+# Get your database_id from: wrangler d1 list
+# Get your account_id from: Cloudflare dashboard
+
+name = "cinefil-api"
+main = "server/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "cinefil_db"
+database_name = "cinefil-db"
+database_id = "YOUR_DATABASE_ID"
+
+[vars]
+SITE_URL = "https://cinefil.me"
+ALLOW_PREVIEW = "true"
+NODE_ENV = "production"

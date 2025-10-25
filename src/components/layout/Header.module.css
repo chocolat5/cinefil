@@ -1,0 +1,85 @@
+.skipLink {
+  position: absolute;
+  left: -9999px;
+
+  &:focus {
+    left: 0;
+    top: 0;
+    color: var(--primary);
+    z-index: 200;
+  }
+}
+
+.header {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  max-width: var(--main);
+  margin: 0 auto;
+  padding: 32px 12px;
+}
+
+.title {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.05em;
+
+  a {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.button {
+  display: block;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  justify-self: end;
+  background: none;
+  cursor: pointer;
+  svg {
+    color: var(--primary);
+    width: 36px;
+    height: 36px;
+  }
+  &[disabled] {
+    cursor: default;
+  }
+}
+
+.menu {
+  display: grid;
+  gap: 12px 0;
+}
+
+.qrContainer {
+  display: grid;
+  gap: 12px 0;
+  justify-items: center;
+  text-align: center;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-self: left;
+  padding: 2px 8px;
+  background: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

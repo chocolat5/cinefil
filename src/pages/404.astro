@@ -1,0 +1,39 @@
+---
+import type { SiteMeta } from "@/types/types";
+
+import Layout from "@/layouts/Layout.astro";
+import config from "@/config/site.config";
+
+const meta: SiteMeta = {
+  title: `404 Page Not Found | ${config.sitename}`,
+  description: `404 Page Not Found | ${config.discription} | ${config.sitename}`,
+};
+---
+
+<Layout meta={meta}>
+  <h2>404 Not Found</h2>
+  <p>
+    We couldn't find the page you were looking for.<br />Back to <a href="/"
+      >Home</a
+    >
+  </p>
+</Layout>
+
+<style>
+  h2 {
+    margin: 0 0 16px;
+    font-size: 1.6rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  p {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+</style>

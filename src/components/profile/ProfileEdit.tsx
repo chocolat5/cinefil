@@ -25,6 +25,7 @@ import { profileReducer } from "@/utils/profileReducer";
 import { handleApiError } from "@/utils/useErrorHandler";
 import {
   validateBio,
+  validateBlueskyId,
   validateDisplayName,
   validateSocialAccountId,
   validateUrl,
@@ -159,7 +160,17 @@ export default function ProfileEdit({
         }
       }
 
-      if (name !== "website") {
+      // validate Bluesky
+      if (name === "bsky") {
+        const errorText = value ? validateBlueskyId(value) : null;
+        if (errorText) {
+          handleError({ bsky: errorText });
+        } else {
+          handleClearError("bsky");
+        }
+      }
+
+      if (name !== "website" && name !== "bsky") {
         const errorText = value ? validateSocialAccountId(value) : null;
         if (errorText) {
           handleError({ [name]: errorText });
@@ -293,6 +304,25 @@ export default function ProfileEdit({
               </div>
               <div className={classes.socialLinks}>
                 <div>
+                  <label className={classes.label} htmlFor="letterboxd">
+                    <Icon.Letterboxd />
+                    Letterboxd
+                  </label>
+                  <TextInput
+                    className={classes.textInput}
+                    id="letterboxd"
+                    name="letterboxd"
+                    placeholder="type without @"
+                    value={inputProfile.socialLinks.letterboxd ?? ""}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleSocialLinksOnChange(e)
+                    }
+                  />
+                  {state.error.letterboxd && (
+                    <ErrorText>{state.error.letterboxd}</ErrorText>
+                  )}
+                </div>
+                <div>
                   <label className={classes.label} htmlFor="twitter">
                     <Icon.Twitter />X (Twitter)
                   </label>
@@ -308,6 +338,25 @@ export default function ProfileEdit({
                   />
                   {state.error.twitter && (
                     <ErrorText>{state.error.twitter}</ErrorText>
+                  )}
+                </div>
+                <div>
+                  <label className={classes.label} htmlFor="bsky">
+                    <Icon.Bluesky />
+                    Bluesky
+                  </label>
+                  <TextInput
+                    className={classes.textInput}
+                    id="bsky"
+                    name="bsky"
+                    placeholder="type without @"
+                    value={inputProfile.socialLinks.bsky ?? ""}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleSocialLinksOnChange(e)
+                    }
+                  />
+                  {state.error.bsky && (
+                    <ErrorText>{state.error.bsky}</ErrorText>
                   )}
                 </div>
                 <div>
@@ -327,25 +376,6 @@ export default function ProfileEdit({
                   />
                   {state.error.instagram && (
                     <ErrorText>{state.error.instagram}</ErrorText>
-                  )}
-                </div>
-                <div>
-                  <label className={classes.label} htmlFor="letterboxd">
-                    <Icon.Letterboxd />
-                    Letterboxd
-                  </label>
-                  <TextInput
-                    className={classes.textInput}
-                    id="letterboxd"
-                    name="letterboxd"
-                    placeholder="type without @"
-                    value={inputProfile.socialLinks.letterboxd ?? ""}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleSocialLinksOnChange(e)
-                    }
-                  />
-                  {state.error.letterboxd && (
-                    <ErrorText>{state.error.letterboxd}</ErrorText>
                   )}
                 </div>
                 <div>

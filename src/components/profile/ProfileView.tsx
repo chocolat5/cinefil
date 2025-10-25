@@ -24,6 +24,22 @@ export default function ProfileView({
         <h2 className={classes.name}>{userProfile.displayName}</h2>
         <p className={classes.bio}>{userProfile.bio}</p>
         <div className={classes.socialLinksView}>
+          {userProfile.socialLinks.letterboxd && (
+            <SocialIconLink
+              href={`https://letterboxd.com/${userProfile.socialLinks.letterboxd}`}
+              ariaLabel="Letterboxd Link"
+            >
+              <Icon.Letterboxd />
+            </SocialIconLink>
+          )}
+          {userProfile.socialLinks.bsky && (
+            <SocialIconLink
+              href={`https://bsky.app/profile/${userProfile.socialLinks.bsky}`}
+              ariaLabel="Bluesky Link"
+            >
+              <Icon.Bluesky />
+            </SocialIconLink>
+          )}
           {userProfile.socialLinks.twitter && (
             <SocialIconLink
               href={`https://x.com/${userProfile.socialLinks.twitter}`}
@@ -38,14 +54,6 @@ export default function ProfileView({
               ariaLabel="Instagram Link"
             >
               <Icon.Instagram />
-            </SocialIconLink>
-          )}
-          {userProfile.socialLinks.letterboxd && (
-            <SocialIconLink
-              href={`https://letterboxd.com/${userProfile.socialLinks.letterboxd}`}
-              ariaLabel="Letterboxd Link"
-            >
-              <Icon.Letterboxd />
             </SocialIconLink>
           )}
           {userProfile.socialLinks.filmarks && (

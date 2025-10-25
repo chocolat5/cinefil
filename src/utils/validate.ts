@@ -167,6 +167,16 @@ export const validateUrl = (url: string): string | null => {
   return null;
 };
 
+export const validateBlueskyId = (id: string): string | null => {
+  if (!id) return null;
+
+  if (!/^[a-zA-Z0-9._-]{1,253}$/.test(id)) {
+    return "Bluesky ID must be 1 - 253 characters (letters, numbers, _, -)";
+  }
+
+  return null;
+};
+
 export const validateSocialAccountId = (id: string): string | null => {
   if (!id) return null;
 

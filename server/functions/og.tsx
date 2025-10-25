@@ -5,10 +5,7 @@ import type { Bindings } from "../types/server";
 
 export const getOgImageHandler = async (c: Context<{ Bindings: Bindings }>) => {
   const fontData = await fetch(
-    new URL(
-      `${c.env.SITE_URL}/fonts/RobotoMono-SemiBold.woff2`,
-      import.meta.url
-    )
+    new URL(`${c.env.SITE_URL}/fonts/RobotoMono-SemiBold.ttf`, import.meta.url)
   ).then((res) => res.arrayBuffer());
 
   const baseStyle = {

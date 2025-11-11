@@ -2,6 +2,7 @@ import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 import type { Context } from "hono";
 
 import type { Bindings } from "../types/server";
+import { OgImage, OgImageFallBack } from "./og-image";
 
 export const getOgImageHandler = async (c: Context<{ Bindings: Bindings }>) => {
   const fontData = await fetch(
@@ -40,11 +41,7 @@ export const getOgImageHandler = async (c: Context<{ Bindings: Bindings }>) => {
     // check userId
     if (!userId) {
       return new ImageResponse(
-        (
-          <div style={{ ...baseStyle, ...errorStyle }}>
-            cinefill - your cinema profile
-          </div>
-        ),
+        <OgImageFallBack styles={{ ...baseStyle, ...errorStyle }} />,
         imageOptions
       );
     }
@@ -57,11 +54,7 @@ export const getOgImageHandler = async (c: Context<{ Bindings: Bindings }>) => {
     // check data exist
     if (!result) {
       return new ImageResponse(
-        (
-          <div style={{ ...baseStyle, ...errorStyle }}>
-            cinefill - your cinema profile
-          </div>
-        ),
+        <OgImageFallBack styles={{ ...baseStyle, ...errorStyle }} />,
         imageOptions
       );
     }
@@ -69,82 +62,12 @@ export const getOgImageHandler = async (c: Context<{ Bindings: Bindings }>) => {
     const ImageTemplate = await (async () => {
       const { avatar, display_name } = result;
       return (
-        <div
-          style={{
-            ...baseStyle,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "50%",
-              overflow: "hidden",
-              width: 150,
-              height: 150,
-              backgroundColor: "#326cfe",
-              color: "#fbfbfb",
-            }}
-          >
-            {avatar ? (
-              <img
-                style={{
-                  objectFit: "cover",
-                  objectPosition: "center",
-                  width: "100%",
-                  height: "100%",
-                }}
-                src={avatar as string}
-                width="80"
-                height="80"
-                alt={display_name as string}
-              />
-            ) : (
-              <span
-                style={{
-                  color: "#fff",
-                  fontSize: 64,
-                  textAlign: "center",
-                  textTransform: "uppercase",
-                }}
-              >
-                {(display_name as string).substring(0, 1)}
-              </span>
-            )}
-          </div>
-          <div
-            style={{
-              marginTop: 16,
-              textAlign: "center",
-              fontSize: 40,
-            }}
-          >
-            {display_name as string}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              marginTop: 4,
-              textAlign: "center",
-              fontSize: 24,
-            }}
-          >
-            <img
-              src={`${c.env.SITE_URL}/images/logo.svg`}
-              width="24"
-              height="24"
-              alt="cinefil logo"
-            />
-            cinefil.me
-          </div>
-        </div>
+        <OgImage
+          baseStyle={baseStyle}
+          avatar={avatar as string}
+          displayName={display_name as string}
+          siteUrl={c.env.SITE_URL}
+        />
       );
     })();
 
@@ -152,11 +75,7 @@ export const getOgImageHandler = async (c: Context<{ Bindings: Bindings }>) => {
   } catch (error) {
     console.error("Og Image fetch error:", error);
     return new ImageResponse(
-      (
-        <div style={{ ...baseStyle, ...errorStyle }}>
-          cinefill - your cinema profile
-        </div>
-      ),
+      <OgImageFallBack styles={{ ...baseStyle, ...errorStyle }} />,
       imageOptions
     );
   }

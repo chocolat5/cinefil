@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - JWT refresh-token flow not implemented
 - Minor layout issues on Safari
 
-[Unreleased]: https://github.com/chocolat5/cinefil/compare/v0.1.1-beta.1...HEAD
+[Unreleased]: https://github.com/chocolat5/cinefil/compare/v0.1.2-beta.1...HEAD
+[0.1.2-beta.1]: https://github.com/chocolat5/cinefil/compare/v0.1.1-beta.1...v0.1.2-beta.1
 [0.1.1-beta.1]: https://github.com/chocolat5/cinefil/compare/v0.1.0-beta.1...v0.1.1-beta.1
 [0.1.0-beta.1]: https://github.com/chocolat5/cinefil/releases/tag/v0.1.0-beta.1

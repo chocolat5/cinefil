@@ -1,7 +1,7 @@
 {
   "name": "cinefil",
   "private": true,
-  "version": "0.1.1-beta.1",
+  "version": "0.1.2-beta.1",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -24,8 +24,8 @@
     "hono": "^4.9.6",
     "postcss-nesting": "^13.0.2",
     "qrcode-generator": "^2.0.4",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "resend": "^6.2.2",
     "zustand": "^5.0.8"
   },

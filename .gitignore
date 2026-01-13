@@ -118,3 +118,6 @@ wrangler.toml
 *.db
 *.db-shm
 *.db-wal
+
+### GitHub Actions ###
+.github export-ignore
